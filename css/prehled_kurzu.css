@@ -1,0 +1,72 @@
+  .main_div{
+  padding: 15px;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 2% 5% 0 5%;
+  height: 85%;
+  background-color: white;
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5);
+  display: block;
+  overflow-y: auto;
+}
+.kurz{
+  padding: 10px;
+  width: auto;
+  height: 110px;
+  position: relative;
+  border: 1px solid black ;
+  border-radius: 8px;
+  margin: 2%;
+}
+.kurz h2{
+  margin-top: 0;
+}
+.kurz img{
+  max-width: 100px;
+  position: inherit;
+  float: left;
+  top: 6%;
+  margin-right: 20px;
+}
+.caption{
+  float: left;
+
+}
+.top{
+  font-size: larger;
+  font-weight: bolder;
+}
+.kurz button{
+  width: 100px;
+  height: 50px;
+  position: inherit;
+  float: right;
+  top: 38%;
+  margin-left: 2%;
+  box-shadow: inset 0 1px 0 0 #54a3f7;
+  background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+  background-color: #007dc1;
+  border-radius: 3px;
+  border: 1px solid #124d77;
+  display: block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 13px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #154682;
+}
+
+@media screen and (max-width: 800px) {
+
+  .kurz img{
+    display: none;
+  }
+  .kurz{
+    height: 190px;
+  }
+  .kurz button{
+    float: none;
+    top: 0;
+  }
+}
