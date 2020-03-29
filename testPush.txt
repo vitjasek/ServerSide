@@ -3,3 +3,4 @@ Zkousim upravit soubor. - Jakub
 
 
 Tohle commituji jako další øádek.. <--
+ Tady porusuju PRAVIDLA
