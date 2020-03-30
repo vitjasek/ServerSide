@@ -1,3 +1,11 @@
+<?php 
+  session_start();
+  if(isset($_SESSION['id'])){
+    echo "<h2>Jste uspesne prihlasen</h2>";
+  }else{
+    echo "<h2>Jste uspesne odhlasen</h2>";
+  }
+?>
 <!DOCTYPE html>
 <html lang="cs">
 

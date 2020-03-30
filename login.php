@@ -43,26 +43,29 @@
       <a href="kurz_edit.html" class="active">Správa kurzů</a>
       <a id="logout" href="login.html">Odhlásit</a>
     </div> -->
-
     <section>
       <div class="main_div">
         <div class="login">
           <img src="img/logoDaNiet.JPG">
           <h2>Přihlášení</h2>
-            <span>Jméno: </span> <input type="text">
-            <span> Heslo: </span> <input type="password">
-            <button id="js_login" onclick="window.location.href = 'index.html'">Přihlásit</button>
+          <form action="loginp.php" method="POST">
+            <span>Jméno: </span> <input type="text" name="username">
+            <span> Heslo: </span> <input type="password" name="password">
+            <button name="login-submit" >Přihlásit</button>
+          </form>
         </div>
         <hr>
         <div class="registration">
           <h2>Registrace</h2>
-          <form>
-            <span>Jméno:</span> <input type="text"><br>
-            <span>Heslo:</span> <input type="password">
-            <span>Heslo znovu:</span> <input type="password">
-            <span>E-mail:</span> <input type="email">
-            <button>Registrovat</button
+
+          <form action="registrace.php" method="POST">
+            <span>Jméno:</span> <input type="text" name ="username" placeholder="Jméno"><br>
+            <span>E-mail:</span> <input type="email" name="mail" placeholder="E-mail">
+            <span>Heslo:</span> <input type="password" name="pwd" placeholder="Heslo">
+            <span>Heslo znovu:</span> <input type="password" name="pwd-repeat" placeholder="Heslo">
+            <button type="submit" name="signup-submit">Registrovat</button>
           </form>
+
         </div>
 
       </div>
