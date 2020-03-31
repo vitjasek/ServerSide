@@ -28,7 +28,7 @@ if (isset($_POST['login-submit'])) {
 					 	
 					 	if(password_verify($password, $hashed_password)){
 	   						session_start();
-	   						$_SESSION["loggedin"] = true;
+	   						$_SESSION["is_loggedin"] = true;
 	                        $_SESSION["id"] = $id;
 	                        $_SESSION["username"] = $username;
 	                        header("location: index.php?login=sucess");

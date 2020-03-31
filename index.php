@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  if(isset($_SESSION['id'])){
+  if(isset($_SESSION['is_loggedin'])){
     echo "<h2>Jste uspesne prihlasen</h2>";
   }else{
     echo "<h2>Jste uspesne odhlasen</h2>";
