@@ -7,7 +7,7 @@
 <html lang="cs">
 
 <head>
-<? echo html_hlavička('kurzy', 'Přehled kurzů'); ?>
+<?php echo html_hlavička('kurzy', 'Přehled kurzů'); ?>
   <link rel="stylesheet" type="text/css" href="css/prehled_kurzu.css">
 </head>
 

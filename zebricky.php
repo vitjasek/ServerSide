@@ -8,7 +8,7 @@
 <html lang="cs">
 
 <head>
-  <? echo html_hlavička('zebricky', 'Žebříčky'); ?>
+  <?php echo html_hlavička('zebricky', 'Žebříčky'); ?>
   <link rel="stylesheet" type="text/css" href="css/zebricky.css">
 </head>
 

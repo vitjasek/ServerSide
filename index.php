@@ -7,7 +7,7 @@
 <html lang="cs">
 
 <head>
-  <? echo html_hlavička('index', 'Přehled kurzů'); ?>
+  <?php echo html_hlavička('index', 'Přehled kurzů'); ?>
   <link rel="stylesheet" type="text/css" href="css/uvod.css">
 </head>
 

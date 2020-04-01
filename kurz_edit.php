@@ -7,7 +7,7 @@
 <html lang="cs">
 
 <head>
-  <? echo html_hlavička('kurz_edit', 'Správa kurzů'); ?>
+  <?php echo html_hlavička('kurz_edit', 'Správa kurzů'); ?>
   <link rel="stylesheet" type="text/css" href="css/kurz_edit.css">
 </head>
 
