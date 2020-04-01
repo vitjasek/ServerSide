@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<?php
+$html = '<!DOCTYPE html>
 <html lang="cs">
 
 <head>
@@ -15,55 +16,29 @@
 
 <body>
   <div class="layer">
-    <!-- <nav>
-      <div class="logo">
-        <a href="index.html">
-          <img src="img/logoDaNiet.jpg" alt="logo">
-        </a>
-      </div>
-      <div class="menu">
-
-        <a href="index.html">Home</a>
-        <a href="zebricky.html">Žebříčky</a>
-        <a href="kurzy.html">Přehled kurzů</a>
-        <a href="kurz_edit.html" class="active" >Správa kurzů</a>
-        <a id="logout" href="login.html">Odhlásit</a>
-      </div>
-      <div id="hamburger" class="fa fa-bars fa-lg" onclick="showBurgerMenu()"></div>
-      <div class="user">
-        <a href="profil.html">
-          <img src="img/profileLogo.png" alt="avatar">
-        </a>
-      </div>
-    </nav>
-    <div id="mobile_menu">
-      <a href="index.html">Home</a>
-      <a href="zebricky.html">Žebříčky</a>
-      <a href="kurzy.html">Přehled kurzů</a>
-      <a href="kurz_edit.html" class="active">Správa kurzů</a>
-      <a id="logout" href="login.html">Odhlásit</a>
-    </div> -->
     <section>
       <div class="main_div">
         <div class="login">
           <img src="img/logoDaNiet.JPG">
           <h2>Přihlášení</h2>
-          <form action="loginp.php" method="POST">
+          <form action="login.php" method="POST">
             <span>Jméno: </span> <input type="text" name="username">
             <span> Heslo: </span> <input type="password" name="password">
-            <button name="login-submit" >Přihlásit</button>
+            <input type="hidden" name="act" value="login">
+            <button type="submit">Přihlásit</button>
           </form>
         </div>
         <hr>
         <div class="registration">
           <h2>Registrace</h2>
 
-          <form action="registrace.php" method="POST">
-            <span>Jméno:</span> <input type="text" name ="username" placeholder="Jméno"><br>
+          <form action="login.php" method="POST">
+            <span>Jméno:</span> <input type="text" name="username" placeholder="Jméno"><br>
             <span>E-mail:</span> <input type="email" name="mail" placeholder="E-mail">
             <span>Heslo:</span> <input type="password" name="pwd" placeholder="Heslo">
             <span>Heslo znovu:</span> <input type="password" name="pwd-repeat" placeholder="Heslo">
-            <button type="submit" name="signup-submit">Registrovat</button>
+            <input type="hidden" name="act" value="registration">
+            <button type="submit" >Registrovat</button>
           </form>
 
         </div>
@@ -78,4 +53,82 @@
   </div>
 </body>
 
-</html>
+</html>';
+
+function login($login, $pass)
+{
+  include_once('db_connector.php');
+  if (empty($login) || empty($pass)) {
+    header("location: login.php");
+    exit();
+  } else {
+    $sql = "SELECT id, login, heslo FROM uzivatel WHERE login =? LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $login);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($res->num_rows > 0 ) {
+      $rec = $res->fetch_assoc();
+      if(!password_verify($pass, $rec['heslo'])) echo "Špatné přihlašovací údaje";
+      session_start();
+      $_SESSION["is_loggedin"] = true;
+      $_SESSION["id"] = $rec['id'];
+      $_SESSION["username"] = $login;
+      header("location: index.php");
+      exit();
+    } else {
+      echo "Špatné přihlašovací údaje";
+    }
+  }
+}
+
+function registration($username, $password)
+{
+  include_once('db_connector.php');
+
+   if (empty($username) || empty($password)) {
+    echo "Pole jméno a heslo musí být vyplněné";
+  } else {
+    $SELECT = "SELECT login FROM uzivatel WHERE login = ? Limit 1";
+    $INSERT = "INSERT INTO uzivatel (login, heslo, obrazekid, roleid) VALUES(?,?,?,?)"; //obrazek a role zatím není, je třeba dodělat
+    try{
+      $stmt = $conn->prepare($SELECT);
+      $stmt->bind_param("s", $username);
+      $stmt->execute();
+      $res = $stmt->get_result();
+      if ($res->num_rows == 0) {
+        $stmt->close();
+        $stmt = $conn->prepare($INSERT);
+        $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+        $id = 1;
+        $stmt->bind_param("ssii", $username, $hashedPwd, $id, $id);
+        $stmt->execute();
+        $stmt->close();
+      } else {
+        echo "Uživatel už existuje";
+      }
+    }catch(Exception $ex){
+      var_dump($ex);
+    }
+    echo "úspěšná registrace";
+  }
+}
+
+
+if (isset($_POST['act'])) {
+
+  switch ($_POST['act']) {
+    case 'login':
+      login($_POST['username'], $_POST['password']);
+      break;
+    case 'registration':
+      registration($_POST['username'], $_POST['pwd']);
+      break;
+    case 'logout':
+      session_destroy();
+      break;
+  }
+}
+
+echo $html;
+?>
