@@ -1,41 +1,52 @@
+<?php     
+  include_once('common_functions.php');
+  include_once('db_connector.php');
+  redirect_if_not_logged();   
+  
+  if($_SERVER['REQUEST_METHOD']=="POST")
+  {
+    $sql = "SELECT id, login, heslo FROM uzivatel WHERE id='{$_SESSION['id']}'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    if($_POST['username']!=$row['login'])
+    {
+      $upd = "UPDATE uzivatel SET login='{$_POST['username']}' WHERE id='{$row['id']}'";
+      $proc = $conn->query($upd);
+    }
+    
+    if(strlen($_POST['pwd'])>0)
+    { 
+      if($_POST['pwd']==$_POST['pwd-repeat'])
+      {
+        $hashedPwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
+        $upd = "UPDATE uzivatel SET heslo='{$hashedPwd}' WHERE id='{$row['id']}'";
+        $proc = $conn->query($upd);
+      }
+      else
+      {
+        echo "<script>alert('Heslo se neshoduje!');</script>";
+      } 
+    }
+  }
+  
+  if (!isset($sql))
+  {
+    $sql = "SELECT id, login FROM uzivatel WHERE id='{$_SESSION['id']}'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();  
+  }
+ 
+?>
 <!DOCTYPE html>
 <html lang="cs">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssnormalize/cssnormalize-min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="css/general.css">
+  <?php echo html_hlavička('profil', 'Přehled kurzů'); ?>
   <link rel="stylesheet" type="text/css" href="css/profil.css">
-  <script type="text/javascript" src="js/general.js"></script>
-
-  <title>Přehled kurzů</title>
 </head>
 
 <body>
   <div class="layer">
-    <nav>
-      <div class="logo">
-        <a href="index.html">
-          <img src="img/logoDaNiet.jpg" alt="logo">
-        </a>
-      </div>
-      <div class="menu">
-
-        <a href="index.html">Home</a>
-        <a href="zebricky.html" >Žebříčky</a>
-        <a href="kurzy.html">Přehled kurzů</a>
-        <a href="kurz_edit.html">Správa kurzů</a>
-        <a id="logout" href="login.html">Odhlásit</a>
-      </div>
-      <div id="hamburger" class="fa fa-bars fa-lg" onclick="showBurgerMenu()"></div>
-      <div class="user">
-        <a href="profil.html">
-          <img src="img/profileLogo.png" alt="avatar">
-        </a>
-      </div>
-    </nav>
     <div id="mobile_menu">
       <a href="index.html">Home</a>
       <a href="zebricky.html" >Žebříčky</a>
@@ -51,33 +62,35 @@
         <div class="profil">
           <h2>Nastavení profilu</h2>
           <div class="password">
-            <table id="inputs">
-              <tr>
-                <td>
-                  Uživatelské jméno:
-                </td>
-                <td>
-                  <input type="text">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Nové heslo:
-                </td>
-                <td>
-                  <input type="password">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Nové heslo znovu:
-                </td>
-                <td>
-                  <input type="password">
-                </td>
-              </tr>
-            </table>
-            <button>Ok</button>
+            <form action="profil.php" method="POST">
+              <table id="inputs">
+                <tr>
+                  <td>
+                    Uživatelské jméno:
+                  </td>
+                  <td>
+                    <input type="text" name="username" value="<?php echo $row['login']; ?>">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Nové heslo:
+                  </td>
+                  <td>
+                    <input type="password" name="pwd">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Nové heslo znovu:
+                  </td>
+                  <td>
+                    <input type="password" name="pwd-repeat">
+                  </td>
+                </tr>
+              </table>
+              <button type="submit">Ok</button>
+            </form>
           </div>
           <div class="profile_pic">
             <img src="img/profileLogo.png">

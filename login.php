@@ -114,10 +114,15 @@ function registration($username, $password)
   }
 }
 
-
 if (isset($_POST['act'])) {
+  router($_POST['act']);
+}
+else if (isset($_GET['act'])) {
+  router($_GET['act']);
+}
 
-  switch ($_POST['act']) {
+function router($act){
+  switch ($act) {
     case 'login':
       login($_POST['username'], $_POST['password']);
       break;
@@ -125,6 +130,7 @@ if (isset($_POST['act'])) {
       registration($_POST['username'], $_POST['pwd']);
       break;
     case 'logout':
+      session_start();
       session_destroy();
       break;
   }
