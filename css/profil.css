@@ -16,7 +16,7 @@
 .profile_pic{
   width: 100%;
   float: left;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .profile_pic img{
   max-width: 100px;
@@ -68,4 +68,8 @@ hr{
 .badges_table_div{
   height: 25%;
   float: left;
+}
+.filenbutton {
+  float: left;
+  margin-top: 20px;
 }
