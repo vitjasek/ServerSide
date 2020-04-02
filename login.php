@@ -101,7 +101,8 @@ function registration($username, $password)
         $stmt = $conn->prepare($INSERT);
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
         $id = 1;
-        $stmt->bind_param("ssii", $username, $hashedPwd, $id, $id);
+        $obrazekid = 1000000;
+        $stmt->bind_param("ssii", $username, $hashedPwd, $obrazekid, $id);
         $stmt->execute();
         $stmt->close();
       } else {

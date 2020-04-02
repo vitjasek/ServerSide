@@ -8,12 +8,15 @@
     $sql = "SELECT id, login, heslo FROM uzivatel WHERE id='{$_SESSION['id']}'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
-    if($_POST['username']!=$row['login'])
+    if(strlen($_POST['username'])>0)
     {
-      $upd = "UPDATE uzivatel SET login='{$_POST['username']}' WHERE id='{$row['id']}'";
-      $proc = $conn->query($upd);
+      if($_POST['username']!=$row['login'])
+      {
+        $upd = "UPDATE uzivatel SET login='{$_POST['username']}' WHERE id='{$row['id']}'";
+        $proc = $conn->query($upd);
+      }
     }
-    
+
     if(strlen($_POST['pwd'])>0)
     { 
       if($_POST['pwd']==$_POST['pwd-repeat'])
@@ -27,15 +30,33 @@
         echo "<script>alert('Heslo se neshoduje!');</script>";
       } 
     }
-  }
-  
-  if (!isset($sql))
-  {
-    $sql = "SELECT id, login FROM uzivatel WHERE id='{$_SESSION['id']}'";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();  
+    if (is_uploaded_file($_FILES['avatar']['tmp_name']))
+    {
+      $image = addslashes(file_get_contents($_FILES['avatar']['tmp_name']));
+      $query = "INSERT INTO obrazek (id,obrazek) VALUES('', '$image')";
+      $qry = mysqli_query($conn, $query);
+      $lastidqry = "SELECT id FROM obrazek ORDER BY id DESC LIMIT 1";
+      $res = $conn->query($lastidqry);
+      $lastid = $res->fetch_assoc(); 
+      $upd = "UPDATE uzivatel SET obrazekid='{$lastid['id']}' WHERE id='{$row['id']}'";
+      $proc = $conn->query($upd);
+    }
+    else
+    {
+      echo "<script>alert('Obrázek se nenahrál!');</script>";
+    }
   }
  
+  $sql = "SELECT id, login, obrazekid FROM uzivatel WHERE id='{$_SESSION['id']}'";
+  $result = $conn->query($sql);
+  $row = $result->fetch_assoc();
+  
+  if($row['obrazekid']!=1000000)
+  {
+    $imgsel = "SELECT id, obrazek FROM obrazek WHERE id='{$row['obrazekid']}'";
+    $imgqry = $conn->query($imgsel);
+    $img = mysqli_fetch_array($imgqry);  
+  }  
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -61,8 +82,8 @@
         <div class="setup">
         <div class="profil">
           <h2>Nastavení profilu</h2>
-          <div class="password">
-            <form action="profil.php" method="POST">
+          <form action="profil.php" method="POST" enctype="multipart/form-data">
+            <div class="password">
               <table id="inputs">
                 <tr>
                   <td>
@@ -89,14 +110,22 @@
                   </td>
                 </tr>
               </table>
+            </div>
+            <div class="profile_pic"><?php
+              if($row['obrazekid']!=1000000)
+              {
+                echo '<img src="data:image/jpeg;base64,'.base64_encode( $img['obrazek'] ).'">';
+              }
+              else
+              {
+                echo '<img src="img/profileLogo.png">';
+              }
+            ?></div>
+            <div class="filenbutton">
+              <input type="file" name="avatar">
               <button type="submit">Ok</button>
-            </form>
-          </div>
-          <div class="profile_pic">
-            <img src="img/profileLogo.png">
-            <input type="file">
-            <button>Ok</button>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
 
