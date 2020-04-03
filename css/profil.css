@@ -69,3 +69,11 @@ hr{
   height: 25%;
   float: left;
 }
+#message{
+  background: red;
+  color: #ffffff;
+  display: none;
+  width: 200px;
+  margin: 5px;
+  padding-left: 5px;
+}

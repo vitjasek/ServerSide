@@ -43,6 +43,7 @@
 <head>
   <?php echo html_hlavička('profil', 'Přehled kurzů'); ?>
   <link rel="stylesheet" type="text/css" href="css/profil.css">
+  <script type="text/javascript" src="js/general.js"></script>
 </head>
 
 <body>
@@ -77,7 +78,7 @@
                     Nové heslo:
                   </td>
                   <td>
-                    <input type="password" name="pwd">
+                    <input type="password" name="pwd" id="pwd">
                   </td>
                 </tr>
                 <tr>
@@ -85,10 +86,11 @@
                     Nové heslo znovu:
                   </td>
                   <td>
-                    <input type="password" name="pwd-repeat">
+                    <input type="password" name="pwd-repeat" id="pwd-repeat">
                   </td>
                 </tr>
               </table>
+              <span id="message">Hesla se neshodují.</span>
               <button type="submit">Ok</button>
             </form>
           </div>
@@ -137,5 +139,4 @@
     </footer>
   </div>
 </body>
-
 </html>

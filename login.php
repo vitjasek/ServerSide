@@ -53,7 +53,6 @@ $html = '<!DOCTYPE html>
     </footer>
   </div>
 </body>
-<script src="js/login.js"></script>
 </html>';
 
 

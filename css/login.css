@@ -70,8 +70,9 @@ hr{
   background: red;
   color: #ffffff;
   display: none;
-  width: 100%;
+  width: 200px;
   margin: 5px;
+  padding-left: 5px;
 }
 
 @media screen and (max-width: 600px) {
