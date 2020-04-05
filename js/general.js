@@ -6,3 +6,13 @@ function showBurgerMenu() {
     x.style.display = "block";
   }
 }
+
+function passCheck(){
+  var pass = $("#pwd").val();
+  var passRep = $("#pwd-repeat").val();
+  if(pass !== passRep) {
+    $("#message").show();
+    return false;
+  }
+}
+

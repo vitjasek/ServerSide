@@ -1,8 +1,8 @@
-<?php     
+<?php
   include_once('common_functions.php');
   include_once('db_connector.php');
-  redirect_if_not_logged();   
-  
+  redirect_if_not_logged();
+
   if($_SERVER['REQUEST_METHOD']=="POST")
   {
     $sql = "SELECT id, login, heslo FROM uzivatel WHERE id='{$_SESSION['id']}'";
@@ -25,7 +25,7 @@
     }
 
     if(strlen($_POST['pwd'])>0)
-    { 
+    {
       if($_POST['pwd']==$_POST['pwd-repeat'])
       {
         $hashedPwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
@@ -35,7 +35,7 @@
       else
       {
         echo "<script>alert('Heslo se neshoduje!');</script>";
-      } 
+      }
     }
     if (is_uploaded_file($_FILES['avatar']['tmp_name']))
     {
@@ -44,22 +44,22 @@
       $qry = mysqli_query($conn, $query);
       $lastidqry = "SELECT id FROM obrazek ORDER BY id DESC LIMIT 1";
       $res = $conn->query($lastidqry);
-      $lastid = $res->fetch_assoc(); 
+      $lastid = $res->fetch_assoc();
       $upd = "UPDATE uzivatel SET obrazekid='{$lastid['id']}' WHERE id='{$row['id']}'";
       $proc = $conn->query($upd);
     }
   }
- 
+
   $sql = "SELECT id, login, obrazekid FROM uzivatel WHERE id='{$_SESSION['id']}'";
   $result = $conn->query($sql);
   $row = $result->fetch_assoc();
-  
+
   if($row['obrazekid']!=1000000)
   {
     $imgsel = "SELECT id, obrazek FROM obrazek WHERE id='{$row['obrazekid']}'";
     $imgqry = $conn->query($imgsel);
-    $img = mysqli_fetch_array($imgqry);  
-  }  
+    $img = mysqli_fetch_array($imgqry);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -101,7 +101,7 @@
                     Nové heslo:
                   </td>
                   <td>
-                    <input type="password" name="pwd">
+                    <input type="password" name="pwd" id="pwd">
                   </td>
                 </tr>
                 <tr>
@@ -109,7 +109,7 @@
                     Nové heslo znovu:
                   </td>
                   <td>
-                    <input type="password" name="pwd-repeat">
+                    <input type="password" name="pwd-repeat" id="pwd-repeat">
                   </td>
                 </tr>
               </table>
@@ -126,6 +126,7 @@
             ?></div>
             <div class="filenbutton">
               <input type="file" name="avatar">
+              <span id="message">Hesla se neshodují.</span>
               <button type="submit">Ok</button>
             </div>
           </form>
@@ -169,5 +170,4 @@
     </footer>
   </div>
 </body>
-
 </html>
