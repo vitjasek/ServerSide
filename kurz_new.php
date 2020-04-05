@@ -20,7 +20,7 @@
         $stmt->bind_param('b', $null);
         $stmt->send_long_data(0, $pic);
         $stmt->execute();
-        $pic_id = $conn->insert_id;
+        $pic_id = $stmt->insert_id;
         $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
         $otazkains = "INSERT INTO otazka (datum,kurzid,obrazekid,odpoved) VALUES( NOW(), '{$kurz_id}', '{$pic_id}', '$ans')";
         $conn->query($otazkains);
