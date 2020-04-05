@@ -17,7 +17,7 @@
         $inspic = "INSERT INTO obrazek (obrazek) VALUES('$pic')";
         $conn->query($inspic);
         $pic_id = $conn->insert_id;
-        $ans = $_POST['anslist0'.$i]=="ano" ? true : false;
+        $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
         $otazkains = "INSERT INTO otazka (datum,kurzid,obrazekid,odpoved) VALUES( NOW(), '{$kurz_id}', '{$pic_id}', '$ans')";
         $conn->query($otazkains);
       }
