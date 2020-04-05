@@ -10,10 +10,17 @@
     $row = $result->fetch_assoc();
     if(strlen($_POST['username'])>0)
     {
-      if($_POST['username']!=$row['login'])
+      $all = "SELECT id, login FROM uzivatel WHERE login='{$_POST['username']}'";
+      $allqry = $conn->query($all);
+      $allrow = $allqry->fetch_assoc();
+      if($_POST['username']!=$row['login'] && is_null($allrow['login']))
       {
         $upd = "UPDATE uzivatel SET login='{$_POST['username']}' WHERE id='{$row['id']}'";
         $proc = $conn->query($upd);
+      }
+      else
+      {
+        "<script>alert('Tento login je již zabraný!');</script>";
       }
     }
 
@@ -40,10 +47,6 @@
       $lastid = $res->fetch_assoc(); 
       $upd = "UPDATE uzivatel SET obrazekid='{$lastid['id']}' WHERE id='{$row['id']}'";
       $proc = $conn->query($upd);
-    }
-    else
-    {
-      echo "<script>alert('Obrázek se nenahrál!');</script>";
     }
   }
  
