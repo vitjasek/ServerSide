@@ -26,6 +26,8 @@
         $conn->query($otazkains);
       }
     }
+    header("Location: kurz_edit.php"); 
+    exit();
   }
 ?>
 <!DOCTYPE html>
