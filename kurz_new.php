@@ -13,15 +13,21 @@
       $kurz_id = $conn->insert_id;
 
       for($i=1; $i<=3; $i++){
-        $pic = $_FILES['pic0'.$i]['tmp_name'];// addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));
-        $inspic = "INSERT INTO obrazek (obrazek) VALUES('$pic')";
-        $conn->query($inspic);
-        $pic_id = $conn->insert_id;
+        $pic = addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));// addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));
+        $inspic = "INSERT INTO obrazek (obrazek) VALUES(?)";
+        $stmt = $conn->prepare($inspic);
+        $null = NULL;
+        $stmt->bind_param('b', $null);
+        $stmt->send_long_data(0, $pic);
+        $stmt->execute();
+        $pic_id = $stmt->insert_id;
         $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
         $otazkains = "INSERT INTO otazka (datum,kurzid,obrazekid,odpoved) VALUES( NOW(), '{$kurz_id}', '{$pic_id}', '$ans')";
         $conn->query($otazkains);
       }
     }
+    header("Location: kurz_edit.php"); 
+    exit();
   }
 ?>
 <!DOCTYPE html>

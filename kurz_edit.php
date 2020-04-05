@@ -2,6 +2,22 @@
   include_once('common_functions.php');
   include_once('db_connector.php');
   redirect_if_not_logged();
+  
+  if($_SERVER['REQUEST_METHOD']=="POST")
+  {
+    $wantedid = $_POST['delete'];
+    $slctall = "SELECT * FROM otazka WHERE kurzid='$wantedid'";
+    $otazky = mysqli_query($conn, $slctall);
+    while($rowot = mysqli_fetch_array($otazky, MYSQLI_ASSOC))
+    {
+      $dltpic = "DELETE FROM obrazek WHERE id='{$rowot['obrazekid']}'";
+      $conn->query($dltpic);
+    }
+    $dltot = "DELETE FROM otazka WHERE kurzid='$wantedid'";
+    $conn->query($dltot);
+    $dltkurz = "DELETE FROM kurz WHERE id='$wantedid'";
+    $conn->query($dltkurz);    
+  }    
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -16,10 +32,40 @@
 
     <section>
       <div class="main_div">
-
-        <button class="new_course">Nový kurz</button>
-
-        <div class="kurz">
+        <form action="kurz_new.php">
+          <button class="new_course">Nový kurz</button>
+        </form>
+        <?php 
+          $slctall = "SELECT * FROM kurz WHERE userid='{$_SESSION['id']}'";
+          $kurzy = mysqli_query($conn, $slctall);
+          while($row = mysqli_fetch_array($kurzy, MYSQLI_ASSOC))
+          {
+            echo "<div class='kurz'>
+              <img src='img/kurz.gif'>
+                <div class='caption'>
+                  <h2>".$row['nazev']."</h2>
+                  <!--<p>
+                    Text kurzu
+                  </p>-->
+                </div>
+                <div class='controls'>
+                <form action='kurz.php' method='POST'>
+                  <input type='hidden' name='run' value='".$row['id']."'>
+                  <button>Test</button>
+                </form>
+                <form action='kurz_update.php' method='POST'>
+                  <input type='hidden' name='edit' value='".$row['id']."'>
+                  <button>Edit</button>
+                </form>
+                <form action='kurz_edit.php' method='POST'>
+                  <input type='hidden' name='delete' value='".$row['id']."'>
+                  <button>Smazat</button>
+                </form>
+                </div>
+              </div>";
+          }?>
+          
+<!--        <div class="kurz">
           <img src="img/kurz.gif">
           <div class="caption">
             <h2>Název kurzu</h2>
@@ -33,7 +79,7 @@
             <button>Smazat</button>
           </div>
 
-        </div>
+        </div> -->
 
       </div>
 
@@ -45,4 +91,4 @@
   </div>
 </body>
 
-</htmllang="cs">
+</html>
