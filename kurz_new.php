@@ -1,8 +1,8 @@
 <?php
   include_once('common_functions.php');
   include_once('db_connector.php');
-  redirect_if_not_logged(); 
-  
+  redirect_if_not_logged();
+
   if($_SERVER['REQUEST_METHOD']=="POST")
   {
     $sql = "SELECT id FROM uzivatel WHERE id='{$_SESSION['id']}'";
@@ -15,7 +15,7 @@
       $selectlast = "SELECT id FROM kurz ORDER BY id DESC LIMIT 1";
       $lastkurzqry = $conn->query($selectlast);
       $lastkurzid = $lastkurzqry->fetch_assoc();
-      
+
       if (is_uploaded_file($_FILES['pic01']['tmp_name']))
       {
         $pic = addslashes(file_get_contents($_FILES['pic01']['tmp_name']));
@@ -35,7 +35,7 @@
         $otazkains = "INSERT INTO otazka (id,datum,kurzid,obrazekid,odpoved) VALUES('', NOW(), '{$lastkurzid['id']}', '{$lastpicid['id']}', '$ans')";
         $otazkaqry = mysqli_query($conn, $otazkains);
       }
-      
+
       if (is_uploaded_file($_FILES['pic02']['tmp_name']))
       {
         $pic = addslashes(file_get_contents($_FILES['pic02']['tmp_name']));
@@ -55,7 +55,7 @@
         $otazkains = "INSERT INTO otazka (id,datum,kurzid,obrazekid,odpoved) VALUES('', NOW(), '{$lastkurzid['id']}', '{$lastpicid['id']}', '$ans')";
         $otazkaqry = mysqli_query($conn, $otazkains);
       }
-       
+
       if (is_uploaded_file($_FILES['pic03']['tmp_name']))
       {
         $pic = addslashes(file_get_contents($_FILES['pic03']['tmp_name']));
@@ -74,11 +74,7 @@
         }
         $otazkains = "INSERT INTO otazka (id,datum,kurzid,obrazekid,odpoved) VALUES('', NOW(), '{$lastkurzid['id']}', '{$lastpicid['id']}', '$ans')";
         $otazkaqry = mysqli_query($conn, $otazkains);
-      } 
-    }
-    else
-    {
-      echo "<script>alert('Všechny položky formuláře musí být vyplněny!');</script>";
+      }
     }
   }
 ?>
@@ -100,7 +96,7 @@
             <span>Název kurzu s otázkou: </span> <input type="text" class="main" name="name"><br>
             <hr class="first">
             <h2>Otázka č.1</h2>
-            <table>            
+            <table>
               <tr><td><span class="inside">Obrázek vztahující se k otázce:</span></td><td><input type="file" class="inside" name="pic01"></td></tr>
               <tr><td><span class="inside">Odpověď:</span></td><td><select id="ans01" name="anslist01">
                 <option value="ano">Ano</option>
@@ -108,8 +104,8 @@
               </select></td></tr>
             </table>
             <hr>
-            <h2>Otázka č.2</h2>            
-            <table>            
+            <h2>Otázka č.2</h2>
+            <table>
               <tr><td><span class="inside">Obrázek vztahující se k otázce:</span></td><td><input type="file" class="inside" name="pic02"></td></tr>
               <tr><td><span class="inside">Odpověď:</span></td><td><select id="ans02" name="anslist02">
                 <option value="ano">Ano</option>
@@ -117,8 +113,8 @@
               </select></td></tr>
             </table>
             <hr>
-            <h2>Otázka č.3</h2>            
-            <table>            
+            <h2>Otázka č.3</h2>
+            <table>
               <tr><td><span class="inside">Obrázek vztahující se k otázce:</span></td><td><input type="file" class="inside" name="pic03"></td></tr>
               <tr><td><span class="inside">Odpověď:</span></td><td><select id="ans03" name="anslist03">
                 <option value="ano">Ano</option>

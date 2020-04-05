@@ -18,10 +18,6 @@
         $upd = "UPDATE uzivatel SET login='{$_POST['username']}' WHERE id='{$row['id']}'";
         $proc = $conn->query($upd);
       }
-      else
-      {
-        "<script>alert('Tento login je již zabraný!');</script>";
-      }
     }
 
     if(strlen($_POST['pwd'])>0)
@@ -31,10 +27,6 @@
         $hashedPwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
         $upd = "UPDATE uzivatel SET heslo='{$hashedPwd}' WHERE id='{$row['id']}'";
         $proc = $conn->query($upd);
-      }
-      else
-      {
-        echo "<script>alert('Heslo se neshoduje!');</script>";
       }
     }
     if (is_uploaded_file($_FILES['avatar']['tmp_name']))
