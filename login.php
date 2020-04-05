@@ -35,8 +35,9 @@ $html = '<!DOCTYPE html>
           <form action="login.php" method="POST">
             <span>Jméno:</span> <input type="text" name="username" placeholder="Jméno"><br>
             <span>E-mail:</span> <input type="email" name="mail" placeholder="E-mail">
-            <span>Heslo:</span> <input type="password" name="pwd" placeholder="Heslo">
-            <span>Heslo znovu:</span> <input type="password" name="pwd-repeat" placeholder="Heslo">
+            <span>Heslo:</span> <input type="password" name="pwd" id="pwd" placeholder="Heslo">
+            <span>Heslo znovu:</span> <input type="password" name="pwd-repeat" id="pwd-repeat" placeholder="Heslo">
+            <span id="message">Hesla se neshodují.</span>
             <input type="hidden" name="act" value="registration">
             <button type="submit" >Registrovat</button>
           </form>
@@ -52,8 +53,9 @@ $html = '<!DOCTYPE html>
     </footer>
   </div>
 </body>
-
 </html>';
+
+
 
 function login($login, $pass)
 {
