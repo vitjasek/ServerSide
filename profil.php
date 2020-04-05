@@ -64,7 +64,6 @@
 <head>
   <?php echo html_hlavička('profil', 'Přehled kurzů'); ?>
   <link rel="stylesheet" type="text/css" href="css/profil.css">
-  <script type="text/javascript" src="js/general.js"></script>
 </head>
 
 <body>
