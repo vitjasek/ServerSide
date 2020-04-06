@@ -26,11 +26,12 @@
             $stmt->bind_param('b', $null);
             $stmt->send_long_data(0, $pic);
             $stmt->execute();
+            $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
+            $otazkaup = "UPDATE otazka SET datum=NOW(), odpoved=$ans, kurzid='".$_POST['idkurz']."', obrazekid='$row[idObrazek]' WHERE id='$row[idOtazka]'";
+            $conn->query($otazkaup);
+            $i++;
           }
-          $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
-          $otazkaup = "UPDATE otazka SET datum=NOW(), odpoved=$ans, kurzid='".$_POST['idkurz']."', obrazekid='$row[idObrazek]' WHERE id='$row[idOtazka]'";
-          $conn->query($otazkaup);
-          $i++;
+
         }
         header("Location: kurz_edit.php"); 
         exit();
