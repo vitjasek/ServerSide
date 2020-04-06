@@ -56,6 +56,14 @@
   text-decoration: none;
   text-shadow: 0 1px 0 #154682;
 }
+#message{
+  background: red;
+  color: #ffffff;
+  display: none;
+  width: 200px;
+  margin: 5px;
+  padding-left: 5px;
+}
 
 @media screen and (max-width: 800px) {
 
