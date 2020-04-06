@@ -1,30 +1,36 @@
-<?php
+<?php 
   include_once('common_functions.php');
   include_once('db_connector.php');
   redirect_if_not_logged();
 
   if($_SERVER['REQUEST_METHOD']=="POST")
   {
-    if(isset($_POST['name']))
+    if(isset($_POST['idkurz']))
     {
-      if(strlen($_POST['name'])>0 && is_uploaded_file($_FILES['pic01']['tmp_name']) && is_uploaded_file($_FILES['pic02']['tmp_name']) && is_uploaded_file($_FILES['pic03']['tmp_name']) && strlen($_POST['anslist01'])>0 && strlen($_POST['anslist02'])>0 && strlen($_POST['anslist03'])>0)
+      if(strlen($_POST['idkurz'])>0 && strlen($_POST['anslist01'])>0 && strlen($_POST['anslist02'])>0 && strlen($_POST['anslist03'])>0)
       {
-        $inskurz = "UPDATE kurz SET nazev='{$_POST['name']}' WHERE userid='{$_SESSION['id']}')"; 
-        $conn->query($inskurz);
-        $kurz_id = $conn->insert_id;
-  
-        for($i=1; $i<=3; $i++){
-          $pic = addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));// addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));
-          $inspic = "UPDATE obrazek SET obrazek=(?) WHERE";
-          $stmt = $conn->prepare($inspic);
-          $null = NULL;
-          $stmt->bind_param('b', $null);
-          $stmt->send_long_data(0, $pic);
-          $stmt->execute();
-          $pic_id = $stmt->insert_id;
+        $wantedid = $_POST['idkurz'];
+        $upkurz = "UPDATE kurz SET nazev='".$_POST['name']."' WHERE id='".$_POST['idkurz']."'";
+        $conn->query($upkurz);
+        
+        $select = "SELECT k.id, k.nazev, k.userid, ot.id as idOtazka, ot.datum, ot.odpoved, ob.id as idObrazek, ob.obrazek FROM kurz AS k INNER JOIN otazka AS ot ON k.id=ot.kurzid INNER JOIN obrazek AS ob ON ot.obrazekid=ob.id WHERE k.id='{$_POST['idkurz']}'";
+        $otazky = mysqli_query($conn, $select);
+
+        $i = 1;
+        while($row = mysqli_fetch_array($otazky, MYSQLI_ASSOC)){
+          if(is_uploaded_file($_FILES['pic0'.$i]['tmp_name'])){
+            $pic = addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));// addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));
+            $uppic = "UPDATE obrazek SET obrazek=(?) WHERE id='$row[idObrazek]'";
+            $stmt = $conn->prepare($uppic);
+            $null = NULL;
+            $stmt->bind_param('b', $null);
+            $stmt->send_long_data(0, $pic);
+            $stmt->execute();
+          }
           $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
-          $otazkains = "INSERT INTO otazka (datum,kurzid,obrazekid,odpoved) VALUES( NOW(), '{$kurz_id}', '{$pic_id}', '$ans')";
-          $conn->query($otazkains);
+          $otazkaup = "UPDATE otazka SET datum=NOW(), odpoved=$ans, kurzid='".$_POST['idkurz']."', obrazekid='$row[idObrazek]' WHERE id='$row[idOtazka]'";
+          $conn->query($otazkaup);
+          $i++;
         }
         header("Location: kurz_edit.php"); 
         exit();
@@ -33,10 +39,8 @@
     else
     {
       $wantedid = $_POST['edit'];
-      $slctot = "SELECT * FROM otazka WHERE kurzid='$wantedid'";
-      $otazky = mysqli_query($conn, $slctot);
-      $slctobr = "SELECT * FROM otazka WHERE kurzid='$wantedid'";
-      $obrazky = mysqli_query($conn, $slctobr);
+      $select = "SELECT k.id, k.nazev, k.userid, ot.id as idOtazka, ot.datum, ot.odpoved, ob.id as idObrazek, ob.obrazek FROM kurz AS k INNER JOIN otazka AS ot ON k.id=ot.kurzid INNER JOIN obrazek AS ob ON ot.obrazekid=ob.id WHERE k.id='$wantedid'";
+      $otazky = mysqli_query($conn, $select);
       $slctkurz = "SELECT * FROM kurz WHERE id='$wantedid'";
       $kurzy = mysqli_query($conn, $slctkurz);
       $kurz = $kurzy->fetch_assoc();
@@ -59,7 +63,7 @@
           <h2>Tvorba nového kurzu</h2>
           <form action="kurz_update.php" method="POST" enctype="multipart/form-data">
             <span>Název kurzu s otázkou: </span> <input type="text" class="main" name="name" value="<?php echo $kurz['nazev']; ?>"><br>
-            <?php 
+            <?php
             $x=0;
             while($row = mysqli_fetch_array($otazky, MYSQLI_ASSOC))
             {
@@ -68,12 +72,16 @@
               <h2>Otázka č.".$x."</h2>
               <table>
                 <tr><td><span class='inside'>Obrázek vztahující se k otázce:</span></td><td><input type='file' class='inside' name='pic0".$x."'></td></tr>
-                <tr><td><span class='inside'>Odpověď:</span></td><td><select id='ans0".$x."' name='anslist0".$x."'>
-                  <option value='ano'>Ano</option>
-                  <option value='ne'>Ne</option>
+                <tr><td><span class='inside'>Odpověď:</span></td><td>
+                <select id='ans0".$x."' name='anslist0".$x."'>
+                  <option value='ano' ".(($row['odpoved']==1)?'selected="selected"':"").">Ano</option>
+                  <option value='ne'".(($row['odpoved']==0)?'selected="selected"':"").">Ne</option>
                 </select></td></tr>
               </table>";
             }
+            ?>
+            <?php
+            echo "<input type='hidden' name='idkurz' value='".$wantedid."'>"
             ?>
             <button type="submit">Upravit</button>
           </form>
