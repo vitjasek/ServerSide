@@ -161,7 +161,7 @@ $html = '<!DOCTYPE html>
     </section>
 
     <footer class="footer">
-      <p>&copy; Vytvořeno studenty na ČZU jako semestrální projekt.</p>
+      <p>&copy; Kontrola.</p>
     </footer>
   </div>
 </body>
