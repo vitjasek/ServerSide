@@ -5,7 +5,7 @@
 
   if($_SERVER['REQUEST_METHOD']=="POST")
   {
-    $sql = "SELECT id, login, heslo FROM uzivatel WHERE id='{$_SESSION['id']}'";
+    $sql = "SELECT id, login, heslo, email FROM uzivatel WHERE id='{$_SESSION['id']}'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if(strlen($_POST['username'])>0)
@@ -42,7 +42,7 @@
     }
   }
 
-  $sql = "SELECT id, login, obrazekid FROM uzivatel WHERE id='{$_SESSION['id']}'";
+  $sql = "SELECT id, login, obrazekid, email FROM uzivatel WHERE id='{$_SESSION['id']}'";
   $result = $conn->query($sql);
   $row = $result->fetch_assoc();
 
