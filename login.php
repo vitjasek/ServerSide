@@ -29,16 +29,16 @@ function login($login, $pass)
   }
 }
 
-function registration($username, $password)
+function registration($username, $password, $mail)
 {
   include_once('db_connector.php');
   global $err_code;
 
-  if (empty($username) || empty($password)) {
+  if (empty($username) || empty($password) || empty($mail)) {
     $err_code = 1;
   } else {
     $SELECT = "SELECT login FROM uzivatel WHERE login = ? Limit 1";
-    $INSERT = "INSERT INTO uzivatel (login, heslo, obrazekid, roleid) VALUES(?,?,?,?)"; //obrazek a role zatím není, je třeba dodělat
+    $INSERT = "INSERT INTO uzivatel (login, heslo, obrazekid, roleid, email) VALUES(?,?,?,?)"; //obrazek a role zatím není, je třeba dodělat
     try{
       $stmt = $conn->prepare($SELECT);
       $stmt->bind_param("s", $username);
@@ -49,8 +49,8 @@ function registration($username, $password)
         $stmt = $conn->prepare($INSERT);
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
         $id = 1;
-        $obrazekid = 1000000;
-        $stmt->bind_param("ssii", $username, $hashedPwd, $obrazekid, $id);
+        $obrazekid = 1000000;       
+        $stmt->bind_param("ssii", $username, $hashedPwd, $obrazekid, $id, $mail);
         $stmt->execute();
         $stmt->close();
         $err_code = 0;
@@ -76,7 +76,7 @@ function router($act){
       login($_POST['username'], $_POST['password']);
       break;
     case 'registration':
-      registration($_POST['username'], $_POST['pwd']);
+      registration($_POST['username'], $_POST['pwd'], $_POST['mail']);
       break;
     case 'logout':
       session_start();
