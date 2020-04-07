@@ -17,7 +17,33 @@
     <section>
       <div class="main_div">
 
-        <div class="kurz">
+      <?php
+        $slctall = "SELECT * FROM kurz";
+        $kurzy = mysqli_query($conn, $slctall);
+        $numrow = 0;
+        while($row = mysqli_fetch_array($kurzy, MYSQLI_ASSOC)){
+            echo "
+            <div class='kurz'>
+              <img src='img/kurz.gif'>
+              <div class='caption'>
+                <h2>".$row["nazev"]."</h2>
+                <!--<p>
+                  Text kurzu
+                </p>-->
+              </div>
+                <form action='kurz.php' method='POST'>
+                  <input type='hidden' name='run' value='".$row['id']."'>
+                  <button>Start</button>
+                </form>  
+            </div>";
+            $numrow++;
+        }
+        if($numrow == 0){
+          echo "<span id='message' style='display:block'>Nebyl nalezen žádný kurz.</span>";
+        }
+      ?>
+
+<!--    <div class="kurz">
           <img src="img/kurz.gif">
           <div class="caption">
             <h2>Logika</h2>
@@ -27,31 +53,7 @@
             <span class="top">TOP: #1 uživatelX, #2 uživatelY, #3 uživatelZ</span>
           </div>
           <button>Start</button>
-        </div>
-
-        <div class="kurz">
-          <img src="img/kurz.gif">
-          <div class="caption">
-            <h2>Hudba</h2>
-            <p>
-              Tento kurz prověří kvality vašeho sluchu
-            </p>
-            <span class="top">TOP: #1 uživatelX, #2 uživatelY, #3 uživatelZ</span>
-          </div>
-          <button>Start</button>
-        </div>
-
-        <div class="kurz">
-          <img src="img/kurz.gif">
-          <div class="caption">
-            <h2>Literatura</h2>
-            <p>
-              Tento kurz prověří kolik máte načteno
-            </p>
-            <span class="top">TOP: #1 uživatelX, #2 uživatelY, #3 uživatelZ</span>
-          </div>
-          <button>Start</button>
-        </div>
+        </div> -->
 
       </div>
 
