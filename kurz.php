@@ -12,13 +12,30 @@
 
   }
 
-  $kurz_select = 'SELECT nazev FROM kurz WHERE id = ?';
+  if(!isset($_SESSION['kurz']['ot'])){
+    $_SESSION['kurz']['ot'] = 1;
+    $_SESSION['kurz'][new DateTime()];
+  }
+  else{
+    $_SESSION['kurz']['ot'] = 0;
+  }
+
+  $kurz_select = 'SELECT nazev, odpoved, obrazek FROM kurz
+  LEFT JOIN otazka ot on ot.kurzid = kurz.id
+  LEFT JOIN obrazek ob on ob.id = ot.obrazekid
+  WHERE kurz.id = ?
+  ORDER BY ot.id';
   $stmt = $conn->prepare($kurz_select);
   $stmt->bind_param('i', $kurz_id);
   $stmt->execute();
   $res = $stmt->get_result();
-  var_dump($res->fetch_row()[0]);
+  $rec = $res->fetch_all(); //název kurzu
 
+  $cislo_ot= $_SESSION['kurz']['ot'];
+
+  $nazev_kurzu = $rec[$cislo_ot][0];
+  $spravna_odpoved = $rec[$cislo_ot][1];
+  $obrazek = $rec[$cislo_ot][2];
 
 ?>
 <!DOCTYPE html>
@@ -27,6 +44,7 @@
   <head>
   <?php echo html_hlavička('kurzy', 'Kurz'); ?>
   <link rel="stylesheet" type="text/css" href="css/hra_b.css">
+  <script type="text/javascript" src="js/kurz.js"></script>
 </head>
 
 <body>
@@ -34,7 +52,7 @@
 
     <section>
       <div id="polozka">
-        <h1>Název spuštného kurzu</h1>
+        <h1><?php $nazev_kurzu?></h1>
         <div id="krizek">
           <button class="myButton js_zavrit_kurz">X</button>
         </div>
@@ -43,7 +61,7 @@
             <button class="myButton js_odpoved" data-answer="1">Ano</button>
           </div>
           <div id="obrazekb">
-            <img src="img/kurz.gif" alt="obsah">
+            <img src="<?php echo $obrazek ?>" alt="obsah">
           </div>
           <div id="neb">
             <button class="myButton js_odpoved" data-answer="0">Ne</button>
@@ -68,7 +86,7 @@
 <?php
 
 $html = '      <div id="polozka">
-<h1>Název spuštného kurzu</h1>
+<h1><?php $nazev_kurzu?></h1>
 <div id="krizek">
   <button class="myButton js_zavrit_kurz">X</button>
 </div>
@@ -77,7 +95,7 @@ $html = '      <div id="polozka">
     <button class="myButton js_odpoved" data-answer="1">Ano</button>
   </div>
   <div id="obrazekb">
-    <img src="img/kurz.gif" alt="obsah">
+    <img src="'.$obrazek.'" alt="obsah">
   </div>
   <div id="neb">
     <button class="myButton js_odpoved" data-answer="0">Ne</button>

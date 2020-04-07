@@ -12,13 +12,14 @@ $(document)
     $.ajax({
       type: "post",
       url: "kurz.php",
+      async: true,
       data: {
         act: "answer",
         answer: answer
       },
       dataType: "html",
       success: function (response) {
-
+        $("#polozka").html(response);
       }
     });
 
