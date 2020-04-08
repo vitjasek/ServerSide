@@ -93,7 +93,7 @@
                     E-mailová adresa:
                   </td>
                   <td>
-                    <input type="email" name="mail" id="mail">
+                    <input type="email" name="mail" value="<?php echo $row['mail']; ?>">
                   </td>
                 </tr>
                 <tr>
