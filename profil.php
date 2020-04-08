@@ -41,6 +41,17 @@
       $proc = $conn->query($upd);
     }
   }
+ if(strlen($_POST['mail'])>0)
+    {
+      $all = "SELECT id, email FROM uzivatel WHERE email='{$_POST['mail']}'";
+      $allqry = $conn->query($all);
+      $allrow = $allqry->fetch_assoc();
+      if($_POST['mail']!=$row['email'] && is_null($allrow['email']))
+      {
+        $upd = "UPDATE uzivatel SET email='{$_POST['mail']}' WHERE id='{$row['id']}'";
+        $proc = $conn->query($upd);
+      }
+    }
 
   $sql = "SELECT id, login, obrazekid, email FROM uzivatel WHERE id='{$_SESSION['id']}'";
   $result = $conn->query($sql);
