@@ -88,6 +88,14 @@
                     <input type="text" name="username" value="<?php echo $row['login']; ?>">
                   </td>
                 </tr>
+                  <tr>
+                  <td>
+                    E-mailová adresa:
+                  </td>
+                  <td>
+                    <input type="email" name="mail" id="mail">
+                  </td>
+                </tr>
                 <tr>
                   <td>
                     Nové heslo:
