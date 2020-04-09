@@ -38,7 +38,7 @@ function registration($username, $password, $mail)
     $err_code = 1;
   } else {
     $SELECT = "SELECT login FROM uzivatel WHERE login = ? Limit 1";
-    $INSERT = "INSERT INTO uzivatel (login, heslo, obrazekid, roleid, email) VALUES(?,?,?,?)"; //obrazek a role zatím není, je třeba dodělat
+    $INSERT = "INSERT INTO uzivatel (login, heslo, obrazekid, roleid, email) VALUES(?,?,?,?,?)"; //obrazek a role zatím není, je třeba dodělat
     try{
       $stmt = $conn->prepare($SELECT);
       $stmt->bind_param("s", $username);
@@ -50,7 +50,7 @@ function registration($username, $password, $mail)
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
         $id = 1;
         $obrazekid = 1000000;       
-        $stmt->bind_param("ssii", $username, $hashedPwd, $obrazekid, $id, $mail);
+        $stmt->bind_param("ssiis", $username, $hashedPwd, $obrazekid, $id, $mail);
         $stmt->execute();
         $stmt->close();
         $err_code = 0;
