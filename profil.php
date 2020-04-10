@@ -20,6 +20,15 @@
       }
     }
 
+     if(strlen($_POST['mail'])>0)
+      {
+        if($_POST['mail']!=$row['email'])
+        {
+          $upd = "UPDATE uzivatel SET email='{$_POST['mail']}' WHERE id='{$row['id']}'";
+          $proc = $conn->query($upd);
+        }
+      }
+
     if(strlen($_POST['pwd'])>0)
     {
       if($_POST['pwd']==$_POST['pwd-repeat'])
@@ -86,6 +95,14 @@
                   </td>
                   <td>
                     <input type="text" name="username" value="<?php echo $row['login']; ?>">
+                  </td>
+                </tr>
+                  <tr>
+                  <td>
+                    E-mailová adresa:
+                  </td>
+                  <td>
+                    <input type="email" name="mail" value="<?php echo $row['email']; ?>">
                   </td>
                 </tr>
                 <tr>
