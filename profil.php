@@ -5,7 +5,7 @@
 
   if($_SERVER['REQUEST_METHOD']=="POST")
   {
-    $sql = "SELECT id, login, heslo FROM uzivatel WHERE id='{$_SESSION['id']}'";
+    $sql = "SELECT id, login, heslo, email FROM uzivatel WHERE id='{$_SESSION['id']}'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if(strlen($_POST['username'])>0)
@@ -19,6 +19,15 @@
         $proc = $conn->query($upd);
       }
     }
+
+     if(strlen($_POST['mail'])>0)
+      {
+        if($_POST['mail']!=$row['email'])
+        {
+          $upd = "UPDATE uzivatel SET email='{$_POST['mail']}' WHERE id='{$row['id']}'";
+          $proc = $conn->query($upd);
+        }
+      }
 
     if(strlen($_POST['pwd'])>0)
     {
@@ -42,7 +51,7 @@
     }
   }
 
-  $sql = "SELECT id, login, obrazekid FROM uzivatel WHERE id='{$_SESSION['id']}'";
+  $sql = "SELECT id, login, obrazekid, email FROM uzivatel WHERE id='{$_SESSION['id']}'";
   $result = $conn->query($sql);
   $row = $result->fetch_assoc();
 
@@ -86,6 +95,14 @@
                   </td>
                   <td>
                     <input type="text" name="username" value="<?php echo $row['login']; ?>">
+                  </td>
+                </tr>
+                  <tr>
+                  <td>
+                    E-mailová adresa:
+                  </td>
+                  <td>
+                    <input type="email" name="mail" value="<?php echo $row['email']; ?>">
                   </td>
                 </tr>
                 <tr>
