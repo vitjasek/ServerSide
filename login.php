@@ -16,13 +16,19 @@ function login($login, $pass)
     $res = $stmt->get_result();
     if ($res->num_rows > 0 ) {
       $rec = $res->fetch_assoc();
-      if(!password_verify($pass, $rec['heslo'])) $err_code = 4;
-      session_start();
-      $_SESSION["is_loggedin"] = true;
-      $_SESSION["id"] = $rec['id'];
-      $_SESSION["username"] = $login;
-      header("location: index.php");
-      exit();
+      if(password_verify($pass, $rec['heslo']))
+      {
+        session_start();
+        $_SESSION["is_loggedin"] = true;
+        $_SESSION["id"] = $rec['id'];
+        $_SESSION["username"] = $login;
+        header("location: index.php");
+        exit();
+      }   
+      else
+      {
+        $err_code = 4;
+      }
     } else {
       $err_code = 4;
     }
