@@ -97,7 +97,7 @@ function err_messages(int $message_code){
       return '<span id="message" style="display:block; background: green; ">Úspěšná registrace.</span>';
     break;
     case 1:
-      return '<span id="message" style="display:block">Pole jméno a heslo musí být vyplněné.</span>';
+      return '<span id="message" style="display:block">Pole jméno, heslo a email musí být vyplněné.</span>';
     break;
     case 2:
       return '<span id="message" style="display:block">"Uživatel už existuje".</span>';
