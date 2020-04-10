@@ -2,7 +2,7 @@
   include_once('common_functions.php');
   include_once('db_connector.php');
   redirect_if_not_logged();
-  
+
   if($_SERVER['REQUEST_METHOD']=="POST")
   {
     $wantedid = $_POST['delete'];
@@ -16,8 +16,8 @@
     $dltot = "DELETE FROM otazka WHERE kurzid='$wantedid'";
     $conn->query($dltot);
     $dltkurz = "DELETE FROM kurz WHERE id='$wantedid'";
-    $conn->query($dltkurz);    
-  }    
+    $conn->query($dltkurz);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -35,7 +35,7 @@
         <form action="kurz_new.php">
           <button class="new_course">Nový kurz</button>
         </form>
-        <?php 
+        <?php
           $slctall = "SELECT * FROM kurz WHERE userid='{$_SESSION['id']}'";
           $kurzy = mysqli_query($conn, $slctall);
           while($row = mysqli_fetch_array($kurzy, MYSQLI_ASSOC))
@@ -49,8 +49,7 @@
                   </p>-->
                 </div>
                 <div class='controls'>
-                <form action='kurz.php' method='POST'>
-                  <input type='hidden' name='run' value='".$row['id']."'>
+                <form action='kurz.php?id=" . $row['id'] . "' method='POST'>
                   <button>Test</button>
                 </form>
                 <form action='kurz_update.php' method='POST'>
@@ -64,23 +63,6 @@
                 </div>
               </div>";
           }?>
-          
-<!--        <div class="kurz">
-          <img src="img/kurz.gif">
-          <div class="caption">
-            <h2>Název kurzu</h2>
-            <p>
-              Text kurzu
-            </p>
-          </div>
-          <div class="controls">
-            <button>Test</button>
-            <button>Edit</button>
-            <button>Smazat</button>
-          </div>
-
-        </div> -->
-
       </div>
 
     </section>

@@ -13,12 +13,15 @@
       $kurz_id = $conn->insert_id;
 
       for($i=1; $i<=3; $i++){
-        $pic = addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));// addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));
+        $path = $_FILES['pic0'.$i]['tmp_name'];
+        $type = $_FILES['pic0'.$i]['type'];
+        $data = file_get_contents($path);
+        $base64 = 'data:' . $type . ';base64,' . base64_encode($data);
         $inspic = "INSERT INTO obrazek (obrazek) VALUES(?)";
         $stmt = $conn->prepare($inspic);
         $null = NULL;
         $stmt->bind_param('b', $null);
-        $stmt->send_long_data(0, $pic);
+        $stmt->send_long_data(0, $base64);
         $stmt->execute();
         $pic_id = $stmt->insert_id;
         $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
@@ -26,7 +29,7 @@
         $conn->query($otazkains);
       }
     }
-    header("Location: kurz_edit.php"); 
+    header("Location: kurz_edit.php");
     exit();
   }
 ?>
