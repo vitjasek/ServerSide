@@ -8,6 +8,10 @@
 
   if(isset($_GET['id'])){
     $kurz_id = $_GET['id'];
+    if(isset($_SESSION['kurz'])){
+      if($_SESSION['kurz']['id'] != $kurz_id)
+        unset($_SESSION['kurz']);
+    }
   }
 
   if(isset($_SESSION['kurz']['ot'])){
