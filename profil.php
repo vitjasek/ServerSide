@@ -160,12 +160,30 @@
               <th>Skóre</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody><?php
+            $slctall = "SELECT * FROM dokonceno WHERE userid='{$_SESSION['id']}'";
+            $dok = mysqli_query($conn, $slctall);
+            $numrow = 0;
+            while($row = mysqli_fetch_array($dok, MYSQLI_ASSOC))
+            {
+              $slnaz = "SELECT id, nazev FROM kurz WHERE id='{$row['kurzid']}'";
+              $kurzy = mysqli_query($conn, $slnaz);
+              $kurz = mysqli_fetch_array($kurzy, MYSQLI_ASSOC);              
+              echo "<tr>
+              <td>".$kurz['nazev']."</td>
+              <td>".$row['datum']."</td>
+              <td>".$row['skore']."</td>
+              </tr>";
+              $numrow ++;
+            }
+            if($numrow == 0){
+              echo "<tr>
+              <td>Žádný kurz nebyl vyplněn!</td>
               <td>...</td>
               <td>...</td>
-              <td>...</td>
-            </tr>
+              </tr>";
+            }
+            ?>
           </tbody>
         </table>
       </div>

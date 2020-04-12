@@ -22,10 +22,18 @@
           if(is_uploaded_file($_FILES['pic0'.$i]['tmp_name'])){
             $dltpic = "DELETE FROM obrazek WHERE id='{$rowot['idObrazek']}'";
             $conn->query($dltpic);
-            $image = addslashes(file_get_contents($_FILES['pic0'.$i]['tmp_name']));
-            $query = "INSERT INTO obrazek (id,obrazek) VALUES('', '$image')";
-            $qry = mysqli_query($conn, $query);
-            $img_id = $conn->insert_id;            
+            $path = $_FILES['pic0'.$i]['tmp_name'];
+            $type = $_FILES['pic0'.$i]['type'];
+            $data = file_get_contents($path);
+            $base64 = 'data:' . $type . ';base64,' . base64_encode($data);
+            $inspic = "INSERT INTO obrazek (obrazek) VALUES(?)";
+            $stmt = $conn->prepare($inspic);
+            $null = NULL;
+            $stmt->bind_param('b', $null);
+            $stmt->send_long_data(0, $base64);
+            $stmt->execute();
+            $img_id = $stmt->insert_id;
+                        
           }
           $ans = $_POST['anslist0'.$i]=="ano" ? 1 : 0;
           if(!empty($img_id)){
@@ -79,7 +87,7 @@
               $rowobr = $slqry->fetch_assoc();              
               echo "<hr>
               <h2>Otázka č.".$x."</h2>
-              <img src='data:image/jpeg;base64,".base64_encode( $rowobr['obrazek'] )."' style='max-width: 300px;'>
+              <img src='". $rowobr['obrazek'] ."' style='max-width: 300px;'>
               <table>
                 <tr><td><span class='inside'>Obrázek vztahující se k otázce:</span></td><td><input type='file' class='inside' name='pic0".$x."'></td></tr>
                 <tr><td><span class='inside'>Odpověď:</span></td><td>

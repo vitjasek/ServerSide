@@ -31,8 +31,7 @@
                   Text kurzu
                 </p>-->
               </div>
-                <form action='kurz.php' method='POST'>
-                  <input type='hidden' name='run' value='".$row['id']."'>
+                <form action='kurz.php?id=" . $row['id'] . "' method='POST'>
                   <button>Start</button>
                 </form>  
             </div>";
