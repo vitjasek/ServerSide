@@ -40,17 +40,17 @@
       <div class="courses_div">
         <h2>Populární kurzy</h2>
         <div class="kurz">
-          <img src="img/dice.png">
+          <img src="img/dice.png" alt="popularni kurz">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-          <img src="img/dice.png">
+          <img src="img/dice.png" alt="nazev kurzu">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-            <img src="img/dice.png">
+            <img src="img/dice.png" alt="nazev kurz">
             <h3>Název kurzu</h3>
             <div class="popis_kurzu">Popis kurzu</div>
         </div>
@@ -78,17 +78,17 @@
         </div>
         <h2>Populární kurzy</h2>
         <div class="kurz">
-          <img src="img/dice.png">
+          <img src="img/dice.png" alt="nazev kurz">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-          <img src="img/dice.png">
+          <img src="img/dice.png" alt="nazev kurz">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-            <img src="img/dice.png">
+            <img src="img/dice.png" alt="nazev kurz">
             <h3>Název kurzu</h3>
             <div class="popis_kurzu">Popis kurzu</div>
         </div>
