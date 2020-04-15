@@ -21,7 +21,7 @@ function login($login, $pass)
         session_start();
         $_SESSION["is_loggedin"] = true;
         $_SESSION["id"] = $rec['id'];
-        $_SESSION["username"] = $login;
+        $_SESSION["login"] = $login;
         header("location: index.php");
         exit();
       }   
@@ -79,7 +79,7 @@ else if (isset($_GET['act'])) {
 function router($act){
   switch ($act) {
     case 'login':
-      login($_POST['username'], $_POST['password']);
+      login($_POST['login'], $_POST['password']);
       break;
     case 'registration':
       registration($_POST['username'], $_POST['pwd'], $_POST['mail']);
@@ -125,6 +125,24 @@ $html = '<!DOCTYPE html>
   <script type="text/javascript" src="js/general.js"></script>
 
   <title>Přehled kurzů</title>
+<style>
+  label{
+	  
+	  display: block;
+	     margin: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  input{
+	 align-content: center;
+    position: absolute;
+    right: 90px;
+    height: 20px;
+}
+  }
+  
+  </style>
 </head>
 
 <body>
@@ -132,11 +150,18 @@ $html = '<!DOCTYPE html>
     <section>
       <div class="main_div">
         <div class="login">
-          <img src="img/logoDaNiet.JPG">
+          <img src="img/logoDaNiet.JPG" alt="Logo Ano/Ne">
           <h2>Přihlášení</h2>
-          <form action="login.php" method="POST">
-            <span>Jméno: </span> <input type="text" name="username">
-            <span> Heslo: </span> <input type="password" name="password">
+          <form action="login.php" method="POST" id="login">
+		 
+            <label for="login">Login:</label> 
+			
+		<input type="text" name="login" id="login" ><br><br>
+			
+			<label for="password">Heslo: </label>
+			
+			 
+			<input type="password" name="password" id="password"><br><br>
             <input type="hidden" name="act" value="login">
             <button type="submit">Přihlásit</button>
             ';
@@ -149,10 +174,10 @@ $html = '<!DOCTYPE html>
           <h2>Registrace</h2>
 
           <form action="login.php" method="POST" onsubmit="return passCheck()">
-            <span>Jméno:</span> <input type="text" name="username" placeholder="Jméno"><br>
-            <span>E-mail:</span> <input type="email" name="mail" placeholder="E-mail">
-            <span>Heslo:</span> <input type="password" name="pwd" id="pwd" placeholder="Heslo">
-            <span>Heslo znovu:</span> <input type="password" name="pwd-repeat" id="pwd-repeat" placeholder="Heslo">
+            <label for="username">Jméno:</label> <input type="text" name="username" placeholder="Jméno" id="username"><br>
+            <label for="mail">E-mail:</label> <input type="email" name="mail" placeholder="E-mail" id="mail"><br>
+            <label for="pwd">Heslo:</label> <input type="password" name="pwd" id="pwd" placeholder="Heslo" id="pwd"><br>
+            <label for="pwd-repeat">Heslo znovu:</label> <input type="password" name="pwd-repeat" id="pwd-repeat" placeholder="Heslo" id="pwd-repeat"><br>
             ';
             if($err_code < 4) $html .= err_messages($err_code);
   $html.='
