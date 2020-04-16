@@ -79,10 +79,10 @@ else if (isset($_GET['act'])) {
 function router($act){
   switch ($act) {
     case 'login':
-      login($_POST['username'], $_POST['password']);
+      login($_POST['login'], $_POST['password']);
       break;
     case 'registration':
-      registration($_POST['username'], $_POST['pwd'], $_POST['mail']);
+      registration($_POST['login'], $_POST['pwd'], $_POST['mail']);
       break;
     case 'logout':
       session_start();
@@ -200,4 +200,4 @@ $html = '<!DOCTYPE html>
 </html>';
 
 echo $html;
-?>  
+?>
