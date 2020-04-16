@@ -200,4 +200,4 @@ $html = '<!DOCTYPE html>
 </html>';
 
 echo $html;
-?>
+?>  
