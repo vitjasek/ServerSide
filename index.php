@@ -17,7 +17,7 @@
     <section>
       <div class="normal">
       <div class="main_div">
-        <h2>O nás</h2>
+        <h1>O nás</h1>
         <div id="about">
           Vítejte na stránkách testování znalostí pomocí rychlých kurzů, ve kterých jde především o správné zodpovězení otázek, ale zároveň také v co nejkratším možném čase.
           Tato forma testování vznikla s myšlenkou poskytnout zábavnou a jednoduchou formu učení, která by byla výzvou pro všechny zúčastněné uživatele této platformy.
@@ -27,7 +27,7 @@
           Kurzy jako takové jsou postaveny na rozpoznání daného problému popsaného otázkou, poté je problém prezentován formou obrázku na základě, kterého se testovaný uživatel může rozhodnout pouze ANO nebo NE.
           Délka každé odpovědi je měřena časomírou, která se v průběhu celého kurzu sčítá a ve finále rozhoduje o umístění jednotlivých uživatelích, jestliže mají stejný počet správných odpovědí.
         </div>
-        <h2>Kontakty</h2>
+        <h1>Kontakty</h1>
         <div id="kontakty">
           <ul>
             <li><a href="">kontakt1</a></li>
@@ -40,17 +40,17 @@
       <div class="courses_div">
         <h2>Populární kurzy</h2>
         <div class="kurz">
-          <img src="img/dice.png" alt="popularni kurz">
+          <img src="img/dice.png" alt="Název kurzu">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-          <img src="img/dice.png" alt="nazev kurzu">
+          <img src="img/dice.png" alt="Název kurzu">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-            <img src="img/dice.png" alt="nazev kurz">
+            <img src="img/dice.png" alt="Název kurzu">
             <h3>Název kurzu</h3>
             <div class="popis_kurzu">Popis kurzu</div>
         </div>
@@ -78,17 +78,17 @@
         </div>
         <h2>Populární kurzy</h2>
         <div class="kurz">
-          <img src="img/dice.png" alt="nazev kurz">
+          <img src="img/dice.png" alt="Popis kurzu">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-          <img src="img/dice.png" alt="nazev kurz">
+          <img src="img/dice.png" alt="Popis kurzu">
           <h3>Název kurzu</h3>
           <div class="popis_kurzu">Popis kurzu</div>
         </div>
         <div class="kurz">
-            <img src="img/dice.png" alt="nazev kurz">
+            <img src="img/dice.png" alt="Popis kurzu">
             <h3>Název kurzu</h3>
             <div class="popis_kurzu">Popis kurzu</div>
         </div>
