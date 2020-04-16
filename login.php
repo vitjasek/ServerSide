@@ -79,7 +79,7 @@ else if (isset($_GET['act'])) {
 function router($act){
   switch ($act) {
     case 'login':
-      login($_POST['login'], $_POST['password']);
+      login($_POST['username'], $_POST['password']);
       break;
     case 'registration':
       registration($_POST['username'], $_POST['pwd'], $_POST['mail']);
@@ -123,21 +123,22 @@ $html = '<!DOCTYPE html>
   <link rel="stylesheet" type="text/css" href="css/login.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/general.js"></script>
-
-  <title>Přehled kurzů</title>
+<title>Přehled kurzů</title>
 <style>
-  label{
-	  
-	  display: block;
-	     margin: 5px;
-    padding: 10px;
+  label {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+    padding: 5;
     text-align: center;
+    right: 100px;
   }
 
   input{
-	 align-content: center;
+	  display: inline-block;
+    align-content: center;
     position: absolute;
-    right: 90px;
+    left: 140px;
     height: 20px;
 }
   }
@@ -151,7 +152,7 @@ $html = '<!DOCTYPE html>
       <div class="main_div">
         <div class="login">
           <img src="img/logoDaNiet.JPG" alt="Logo Ano/Ne">
-          <h2>Přihlášení</h2>
+          <h1>Přihlášení</h1>
           <form action="login.php" method="POST" id="login">
 		 
             <label for="login">Login:</label> 
@@ -171,7 +172,7 @@ $html = '<!DOCTYPE html>
         </div>
         <hr>
         <div class="registration">
-          <h2>Registrace</h2>
+          <h1>Registrace</h1>
 
           <form action="login.php" method="POST" onsubmit="return passCheck()">
             <label for="username">Jméno:</label> <input type="text" name="username" placeholder="Jméno" id="username"><br>
