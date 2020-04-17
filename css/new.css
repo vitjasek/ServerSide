@@ -15,7 +15,7 @@
   margin: auto;
   position: relative;
 }
-.kurz span{
+.kurz label{
   float: left;
   width: 30%;
 }
@@ -55,7 +55,7 @@ table {
   margin-right:15%;
 }
 
-span.inside {
+label.inside {
   text-align: right !important;
   float: right !important;
   width: 100% !important;
