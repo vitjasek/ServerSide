@@ -94,7 +94,7 @@
                     Uživatelské jméno:
                   </td>
                   <td>
-                    <input type="text" name="username" value="<?php echo $row['login']; ?>">
+                    <input type="text" name="username" value="<?php echo $row['login']; ?>" title="title">
                   </td>
                 </tr>
                   <tr>
@@ -102,7 +102,7 @@
                     E-mailová adresa:
                   </td>
                   <td>
-                    <input type="email" name="mail" value="<?php echo $row['email']; ?>">
+                    <input type="email" name="mail" value="<?php echo $row['email']; ?>"title="title1">
                   </td>
                 </tr>
                 <tr>
@@ -110,7 +110,7 @@
                     Nové heslo:
                   </td>
                   <td>
-                    <input type="password" name="pwd" id="pwd">
+                    <input type="password" name="pwd" id="pwd"title="title2">
                   </td>
                 </tr>
                 <tr>
@@ -118,7 +118,7 @@
                     Nové heslo znovu:
                   </td>
                   <td>
-                    <input type="password" name="pwd-repeat" id="pwd-repeat">
+                    <input type="password" name="pwd-repeat" id="pwd-repeat"title="title3">
                   </td>
                 </tr>
               </table>
@@ -126,15 +126,15 @@
             <div class="profile_pic"><?php
               if($row['obrazekid']!=1000000)
               {
-                echo '<img src="data:image/jpeg;base64,'.base64_encode( $img['obrazek'] ).'">';
+               echo '<img src="data:image/jpeg;base64,'.base64_encode( $img['obrazek'] ).'" alt="profilovka">';
               }
               else
               {
-                echo '<img src="img/profileLogo.png">';
+                echo '<img src="img/profileLogo.png" alt="profilovka2">';
               }
             ?></div>
             <div class="filenbutton">
-              <input type="file" name="avatar">
+              <input type="file" name="avatar" title="title4">
               <span id="message">Hesla se neshodují.</span>
               <button type="submit">Ok</button>
             </div>

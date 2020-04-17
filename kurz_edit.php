@@ -41,7 +41,7 @@
           while($row = mysqli_fetch_array($kurzy, MYSQLI_ASSOC))
           {
             echo "<div class='kurz'>
-              <img src='img/kurz.gif'>
+              <img src='img/kurz.gif'alt='obrazek'>
                 <div class='caption'>
                   <h2>".$row['nazev']."</h2>
                   <!--<p>

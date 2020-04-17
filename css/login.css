@@ -10,6 +10,11 @@
   overflow-y: auto;
   text-align: center;
 }
+h1{
+	font-size: 1em;
+    margin: 1.67em 0;
+	
+}
 .login{
   width: 380px;
   margin: auto;
@@ -24,8 +29,8 @@
 }
 .login button{
   position: absolute;
-    top: 107%;
-    left: 87%;
+    top: 77%;
+    left: 100%;
 }
 button{
   width: 100px;
@@ -63,8 +68,8 @@ hr{
 }
 .registration button{
   position: absolute;
-    top: 107%;
-    left: 87%;
+    top: 47%;
+    left: 99%;
 }
 #message{
   background: red;

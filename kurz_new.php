@@ -39,6 +39,7 @@
 <head>
 <?php echo html_hlavička('new', 'Nový kurz'); ?>
 <link rel="stylesheet" type="text/css" href="css/new.css">
+
 </head>
 
 <body>
@@ -46,37 +47,39 @@
     <section>
       <div class="main_div">
         <div class="kurz">
-          <h2>Tvorba nového kurzu</h2>
+          <h1>Tvorba nového kurzu</h1>
           <form action="kurz_new.php" method="POST" enctype="multipart/form-data">
-            <span>Název kurzu s otázkou: </span> <input type="text" class="main" name="name"><br>
+            <label for="name">Název kurzu s otázkou: </label> <input type="text" class="main" name="name" id="name"><br>
             <hr class="first">
             <h2>Otázka č.1</h2>
             <table>
-              <tr><td><span class="inside">Obrázek vztahující se k otázce:</span></td><td><input type="file" class="inside" name="pic01"></td></tr>
-              <tr><td><span class="inside">Odpověď:</span></td><td><select id="ans01" name="anslist01">
-                <option value="ano">Ano</option>
-                <option value="ne">Ne</option>
+              <tr><td><label class="inside" for="pic01">Obrázek vztahující se k otázce:</label></td><td>
+			  <input type="file" class="inside" name="pic01" id="pic01" title="ggg"></td></tr> 
+              <tr><td><label class="inside" for="anslist01">Odpověď:</label></td><td><select id="ans01" name="anslist01" title="sfsdf">
+                <option  value="ano">Ano</option>
+                <option  value="ne" >Ne</option> 
               </select></td></tr>
             </table>
             <hr>
             <h2>Otázka č.2</h2>
             <table>
-              <tr><td><span class="inside">Obrázek vztahující se k otázce:</span></td><td><input type="file" class="inside" name="pic02"></td></tr>
-              <tr><td><span class="inside">Odpověď:</span></td><td><select id="ans02" name="anslist02">
-                <option value="ano">Ano</option>
-                <option value="ne">Ne</option>
+              <tr><td><label class="inside" for="pic02">Obrázek vztahující se k otázce:</label></td><td><input type="file" class="inside" name="pic02" title="ggg"></td></tr>
+              <tr><td><label class="inside" for="anslist02">Odpověď:</label></td><td><select id="ans02" name="anslist02" title="sfsdf">
+                <option value="ano" title="ano">Ano</option>
+                <option value="ne" title="ne">Ne</option>
               </select></td></tr>
             </table>
             <hr>
             <h2>Otázka č.3</h2>
             <table>
-              <tr><td><span class="inside">Obrázek vztahující se k otázce:</span></td><td><input type="file" class="inside" name="pic03"></td></tr>
-              <tr><td><span class="inside">Odpověď:</span></td><td><select id="ans03" name="anslist03">
-                <option value="ano">Ano</option>
-                <option value="ne">Ne</option>
+              <tr><td><label class="inside" for="pic03">Obrázek vztahující se k otázce:</label></td><td><input type="file" class="inside" name="pic03" title="ggg"></td></tr>
+              <tr><td><label class="inside" for="anslist03">Odpověď:</label></td><td><select id="ans03" name="anslist03" title="sfsdf">
+			  <label for="ano">
+                <option value="ano" >Ano</option>
+                <option value="ne" >Ne</option> </label>
               </select></td></tr>
             </table>
-            <button type="submit">Vytvořit</button>
+            <button type="submit" title="button">Vytvořit</button>
           </form>
         </div>
       </div>
