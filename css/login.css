@@ -72,8 +72,8 @@ hr{
     left: 99%;
 }
 #message{
-  background: red;
-  color: #ffffff;
+  background: #F47678;
+  color: #000000;
   display: none;
   width: 200px;
   margin: 5px;
