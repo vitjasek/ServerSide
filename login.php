@@ -82,7 +82,7 @@ function router($act){
       login($_POST['login'], $_POST['password']);
       break;
     case 'registration':
-      registration($_POST['login'], $_POST['pwd'], $_POST['mail']);
+      registration($_POST['username'], $_POST['pwd'], $_POST['mail']);
       break;
     case 'logout':
       session_start();
