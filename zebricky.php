@@ -16,9 +16,9 @@
   <div class="layer">
     <section>
       <div class="main_div">
+        <h1>Žebříčky</h1>
        
         <?php
-
         $sqlCreateView = "CREATE VIEW skoreview AS SELECT uzivatel.login, obrazek.obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id GROUP BY login ORDER BY skore DESC";
         $sqlCheckView = "SELECT * FROM skoreview LIMIT 1";
         if (mysqli_query($conn, $sqlCheckView) == false){
@@ -40,7 +40,7 @@
                       <div class="tops_wrap"> 
                         <div class="top second">
                         <h3>1#</h3>
-                        <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                        <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                         <h3>' . $row['login'] . '</h3>
                         <p>' . $row['skore'] . '</p>
                       </div>';
@@ -49,7 +49,7 @@
                 if ($i == 2) {
                   echo '<div class="top first">
                           <h3>2#</h3>
-                          <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                          <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                           <h3>' . $row['login'] . '</h3>
                           <p>' . $row['skore'] . '</p>
                         </div>';
@@ -58,7 +58,7 @@
                 if ($i == 3) {
                   echo '<div class="top third">
                           <h3>3#</h3>
-                          <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                          <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                           <h3>' . $row['login'] . '</h3>
                           <p>' . $row['skore'] . '</p>
                         </div>
@@ -67,7 +67,7 @@
                 if ($i > 3) {
                   echo '<div class="places_view">
                         <div class="place">
-                          <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                          <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                           <div>' . $row['login'] . '</div>
                           <span class="score">' . $row['skore'] . '</span>
                           <span class="score_place" >#'.$i.'</span>
@@ -86,7 +86,7 @@
 
                         <div class="my_place">
                           <div class="place">
-                            <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                                <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
                             <span class="score_place" >VAŠE POZICE #' . $row['num'] . '</span>
@@ -117,7 +117,7 @@
                       <div class="tops_wrap"> 
                         <div class="top first">
                         <h3>1#</h3>
-                        <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                        <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                         <h3>' . $row['login'] . '</h3>
                         <p>' . $row['skore'] . '</p>
                       </div>';
@@ -126,7 +126,7 @@
                 if ($i == 2) {
                   echo '<div class="top second">
                           <h3>2#</h3>
-                          <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                          <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                           <h3>' . $row['login'] . '</h3>
                           <p>' . $row['skore'] . '</p>
                         </div>';
@@ -135,7 +135,7 @@
                 if ($i == 3) {
                   echo '<div class="top third">
                           <h3>3#</h3>
-                          <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                          <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                           <h3>' . $row['login'] . '</h3>
                           <p>' . $row['skore'] . '</p>
                         </div>
@@ -144,7 +144,7 @@
                 if ($i > 3) {
                   echo '<div class="places_view">
                           <div class="place">
-                            <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                            <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
                             <span class="score_place" >#'.$i.'</span>
@@ -163,7 +163,7 @@
 
                         <div class="my_place">
                           <div class="place">
-                            <img src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
+                            <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
                             <span class="score_place" >#' . $row['num'] . '</span>
