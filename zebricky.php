@@ -19,14 +19,7 @@
         <h1>Žebříčky</h1>
        
         <?php
-        $sqlCreateView = "CREATE VIEW skoreview AS SELECT uzivatel.login, obrazek.obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id GROUP BY login ORDER BY skore DESC";
-        $sqlCheckView = "SELECT * FROM skoreview LIMIT 1";
-        if (mysqli_query($conn, $sqlCheckView) == false){
-          mysqli_query($conn, $sqlCreateView);
-        }
-
-
-            $sql = "SELECT login, obrazek, skore, num FROM skoreview";
+            $sql = "SELECT uzivatel.login AS login, obrazek.obrazek AS obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id GROUP BY login ORDER BY skore DESC";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
@@ -76,8 +69,8 @@
 
               }
               echo '</div>';
-                 $sql = "SELECT login, obrazek, skore, num FROM skoreview WHERE id = '{$_SESSION['id']}'";
-                     $result = mysqli_query($conn, $sql);
+              $sql = "SELECT uzivatel.login AS login, obrazek.obrazek AS obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id && uzivatel.id = '{$_SESSION['id']}' GROUP BY login ORDER BY skore DESC";
+              $result = mysqli_query($conn, $sql);
                      $resultCheck = mysqli_num_rows($result);
                      if($resultCheck > 0){
                       $row = mysqli_fetch_assoc($result);
