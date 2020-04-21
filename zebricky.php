@@ -19,7 +19,14 @@
         <h1>Žebříčky</h1>
        
         <?php
-            $sql = "SELECT uzivatel.login AS login, obrazek.obrazek AS obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id GROUP BY login ORDER BY skore DESC";
+/*        $sqlCreateView = "CREATE VIEW skoreview AS SELECT uzivatel.login, obrazek.obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id GROUP BY login ORDER BY skore DESC";
+        $sqlCheckView = "SELECT * FROM skoreview LIMIT 1";
+        if (mysqli_query($conn, $sqlCheckView) == false){
+          mysqli_query($conn, $sqlCreateView);
+        }                                            */
+
+
+            $sql = "SELECT uz.login, ob.obrazek, SUM(dok.skore) AS skore, uz.id FROM uzivatel AS uz INNER JOIN dokonceno AS dok ON uz.id=dok.userid LEFT JOIN obrazek AS ob ON uz.obrazekid=ob.id GROUP BY uz.login, ob.obrazek, uz.id ORDER BY skore DESC";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
@@ -69,8 +76,8 @@
 
               }
               echo '</div>';
-              $sql = "SELECT uzivatel.login AS login, obrazek.obrazek AS obrazek, SUM(dokonceno.skore) AS skore, ROW_NUMBER() OVER(ORDER BY skore DESC) AS num, uzivatel.id FROM uzivatel, dokonceno, obrazek WHERE uzivatel.id = dokonceno.userid && uzivatel.obrazekid = obrazek.id && uzivatel.id = '{$_SESSION['id']}' GROUP BY login ORDER BY skore DESC";
-              $result = mysqli_query($conn, $sql);
+              $sql = "SELECT uz.login, ob.obrazek, SUM(dok.skore) AS skore, uz.id FROM uzivatel AS uz INNER JOIN dokonceno AS dok ON uz.id=dok.userid LEFT JOIN obrazek AS ob ON uz.obrazekid=ob.id WHERE uz.id='{$_SESSION['id']}' GROUP BY uz.login, ob.obrazek, uz.id ORDER BY skore DESC";
+                     $result = mysqli_query($conn, $sql);
                      $resultCheck = mysqli_num_rows($result);
                      if($resultCheck > 0){
                       $row = mysqli_fetch_assoc($result);
@@ -82,7 +89,7 @@
                                 <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
-                            <span class="score_place" >VAŠE POZICE #' . $row['num'] . '</span>
+                            <span class="score_place" >VAŠE POZICE #' . $i . '</span>
                           </div>
                         </div>
                         <hr class="second_hr">';
@@ -96,7 +103,7 @@
         <div class="mobile_div">
 
          <?php
-            $sql = "SELECT login, obrazek, skore, num FROM skoreview";
+            $sql = "SELECT uz.login, ob.obrazek, SUM(dok.skore) AS skore, uz.id FROM uzivatel AS uz INNER JOIN dokonceno AS dok ON uz.id=dok.userid LEFT JOIN obrazek AS ob ON uz.obrazekid=ob.id GROUP BY uz.login, ob.obrazek, uz.id ORDER BY skore DESC";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
@@ -146,7 +153,7 @@
 
               }
               echo '</div>';
-                 $sql = "SELECT login, obrazek, skore, num FROM skoreview WHERE id = '{$_SESSION['id']}' LIMIT 1";
+                 $sql = "SELECT uz.login, ob.obrazek, SUM(dok.skore) AS skore, uz.id FROM uzivatel AS uz INNER JOIN dokonceno AS dok ON uz.id=dok.userid LEFT JOIN obrazek AS ob ON uz.obrazekid=ob.id WHERE uz.id='{$_SESSION['id']}' GROUP BY uz.login, ob.obrazek, uz.id ORDER BY skore DESC LIMIT 1";
                      $result = mysqli_query($conn, $sql);
                      $resultCheck = mysqli_num_rows($result);
                      if($resultCheck > 0){
@@ -159,7 +166,7 @@
                             <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
-                            <span class="score_place" >#' . $row['num'] . '</span>
+                            <span class="score_place" >#' . $i . '</span>
                           </div>
                         </div>
                         <hr class="second_hr">';
