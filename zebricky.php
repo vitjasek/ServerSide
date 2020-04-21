@@ -35,6 +35,10 @@
               while ($row = mysqli_fetch_assoc($result)) {
                 $i++;
                 // echo   $i . " " . $row['login'] . " " . $row['skore'] .  "<br>";
+                if ($row['id']==$_SESSION['id']) {
+                  $us=$i;
+                }
+                
                 if ($i == 1) {
                  echo '
                       <div class="tops_wrap"> 
@@ -73,9 +77,9 @@
                           <span class="score_place" >#'.$i.'</span>
                         </div>';
                 }
+                
 
               }
-              echo '</div>';
               $sql = "SELECT uz.login, ob.obrazek, SUM(dok.skore) AS skore, uz.id FROM uzivatel AS uz INNER JOIN dokonceno AS dok ON uz.id=dok.userid LEFT JOIN obrazek AS ob ON uz.obrazekid=ob.id WHERE uz.id='{$_SESSION['id']}' GROUP BY uz.login, ob.obrazek, uz.id ORDER BY skore DESC";
                      $result = mysqli_query($conn, $sql);
                      $resultCheck = mysqli_num_rows($result);
@@ -89,12 +93,13 @@
                                 <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
-                            <span class="score_place" >VAŠE POZICE #' . $i . '</span>
+                            <span class="score_place" >VAŠE POZICE #' . $us . '</span>
                           </div>
                         </div>
                         <hr class="second_hr">';
                      }
             }
+            echo '</div>';
             echo "</div>";  
              ?>        
 
@@ -112,6 +117,10 @@
               while ($row = mysqli_fetch_assoc($result)) {
                 $i++;
                 // echo   $i . " " . $row['login'] . " " . $row['skore'] .  "<br>";
+                if ($row['id']==$_SESSION['id']) {
+                  $us=$i;
+                }
+                
                 if ($i == 1) {
                  echo '
                       <div class="tops_wrap"> 
@@ -150,9 +159,9 @@
                             <span class="score_place" >#'.$i.'</span>
                           </div>';
                 }
+                
 
               }
-              echo '</div>';
                  $sql = "SELECT uz.login, ob.obrazek, SUM(dok.skore) AS skore, uz.id FROM uzivatel AS uz INNER JOIN dokonceno AS dok ON uz.id=dok.userid LEFT JOIN obrazek AS ob ON uz.obrazekid=ob.id WHERE uz.id='{$_SESSION['id']}' GROUP BY uz.login, ob.obrazek, uz.id ORDER BY skore DESC LIMIT 1";
                      $result = mysqli_query($conn, $sql);
                      $resultCheck = mysqli_num_rows($result);
@@ -166,12 +175,13 @@
                             <img alt = "profilovy obrazek" src="data:image/jpeg;base64,'.base64_encode( $row['obrazek'] ).'">
                             <div>' . $row['login'] . '</div>
                             <span class="score">' . $row['skore'] . '</span>
-                            <span class="score_place" >#' . $i . '</span>
+                            <span class="score_place" >#' . $us . '</span>
                           </div>
                         </div>
                         <hr class="second_hr">';
                      }
             }
+            echo '</div>';
             echo "</div>";  
              ?>        
       </div>
