@@ -22,7 +22,6 @@
 
   if(empty($_SESSION['kurz'])){
     $_SESSION['kurz']['ot'] = 0;
-    $_SESSION['kurz']['cas']  = new DateTime();
     load_questions($kurz_id);
     $_SESSION['kurz']['correct_asn'] = 0;
     $_SESSION['kurz']['ans'] = -1;
@@ -116,7 +115,7 @@
         </div>
         <div id="hrab_paticka">
           <span id="js_odpoved"></span>
-          <span>Uplynulý čas</span>';
+          ';
           if ($_SESSION['kurz']['ot'] < 2){
            $html .= '<button id="exit_button" class="myButton js_next">⮞</button>';
           }
