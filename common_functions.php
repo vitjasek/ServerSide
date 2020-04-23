@@ -29,25 +29,11 @@ function html_hlavička(string $active_page, string $title = ""){
       $html .= $odkazy;
 
       //následuje js v html v php - fujky :)
-    include('db_connector.php');
-    $stmp = $conn->prepare('SELECT obr.obrazek FROM obrazek obr
-    INNER JOIN uzivatel ON uzivatel.obrazekid = obr.id
-    WHERE uzivatel.id = ?');
-    $stmp->bind_param('i', $_SESSION['id']);
-    $stmp->execute();
-    $res = $stmp->get_result();
-
     $html .= '</div>
     <div id="hamburger" class="fa fa-bars fa-lg" onclick="showBurgerMenu()"></div>
     <div class="user">
-      <a href="profil.php">';
-      if($res){
-        $obr = $res->fetch_row()[0];
-        $html .= '<img src="data:image/jpeg;base64,'.base64_encode($obr).'" alt="avatar">';
-      }else{
-        $html .= '<img src="img/profileLogo.png" alt="avatar">';
-      }
-      $html .= '
+      <a href="profil.php">
+        <img src="img/profileLogo.png" alt="avatar">
       </a>
     </div>
   </nav>
@@ -67,4 +53,5 @@ function redirect_if_not_logged(){
     }
   }
 }
+
 ?>
